@@ -23,7 +23,7 @@ object FromKafkaToHbase {
     //StreamingExamples.setStreamingLogLevels()
     val logger: Logger = LoggerFactory.getLogger(getClass)
     val Array(zkQuorum, group, topics, numThreads) = args
-    val sparkConf = new SparkConf().setMaster("local[2]").setAppName("KafkaWordCount")
+    val sparkConf = new SparkConf().setMaster("local[*]").setAppName("KafkaWordCount")
     val ssc = new StreamingContext(sparkConf, Seconds(2))
     ssc.checkpoint("checkpoint")
 
@@ -53,6 +53,8 @@ object FromKafkaToHbase {
             table.put(put)
 
             table.close() //分区数据写入HBase后关闭连接
+            // 返还连接
+            //ConnectionPool.returnConnection(connection)
           })
         } catch {
           case e: Exception => logger.error("写入HBase失败，{}", e.getMessage)

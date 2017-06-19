@@ -10,7 +10,6 @@ import org.slf4j.LoggerFactory
 
 object ConnectionPool {
   private val logger: Logger = LoggerFactory.getLogger(getClass)
-  //private val conf = HBaseConfiguration.create()
   private val connectionPool = Queue[Connection]()
 
   private val hbaseConfig: Configuration = new Configuration();
@@ -23,12 +22,12 @@ object ConnectionPool {
     // TODO  存在内存溢出风险
     if (connectionPool.size > 0) {
       val (elem, remain) = connectionPool.dequeue
-      logger.info(elem.toString())
+      logger.info("getConnection1, size:" + connectionPool.size)
       elem
     } else {
       val elem = ConnectionFactory.createConnection(conf)
       connectionPool.enqueue(elem)
-      logger.info(elem.toString())
+      logger.info("getConnection2, size:" + connectionPool.size)
       elem
     }
   }

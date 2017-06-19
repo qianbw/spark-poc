@@ -27,3 +27,4 @@ out/
 *classpath
 *prefs
 checkpoint/
+/target/
