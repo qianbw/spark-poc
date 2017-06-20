@@ -1,6 +1,6 @@
 package my.spark.sample
 
-import scala.collection.immutable.Queue
+import scala.collection.mutable.Queue
 import org.apache.hadoop.conf.Configuration
 import org.apache.hadoop.hbase.HBaseConfiguration
 import org.apache.hadoop.hbase.client.Connection
@@ -21,7 +21,7 @@ object ConnectionPool {
   def getConnection() = {
     // TODO  存在内存溢出风险
     if (connectionPool.size > 0) {
-      val (elem, remain) = connectionPool.dequeue
+      val elem = connectionPool.dequeue
       logger.info("getConnection1, size:" + connectionPool.size)
       elem
     } else {
