@@ -54,7 +54,7 @@ object FromKafkaToHbase {
 
             table.close() //分区数据写入HBase后关闭连接
             // 返还连接
-            //ConnectionPool.returnConnection(connection)
+            ConnectionPool.returnConnection(connection)
           })
         } catch {
           case e: Exception => logger.error("写入HBase失败，{}", e.getMessage)
