@@ -1,4 +1,4 @@
-package my.spark.sample
+package my.spark.sample.util
 
 import scala.collection.mutable.Queue
 import org.apache.hadoop.conf.Configuration
