@@ -50,8 +50,9 @@ object FromKafkaToKafka {
           partitionRecords.foreach(s => {
             val key = s._1
             val count = s._2
+            println(key.toString() + ":" + count.toString())
             val producer = KafkaProducer.getInstance(brokers)
-            val messages = new KeyedMessage[String, String](topic, key.toString() + ":" + count.toString())
+            val messages = new KeyedMessage[String, String](topic, key.toString(), count.toString())
             producer.send(messages)
 
           })
