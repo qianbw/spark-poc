@@ -25,7 +25,7 @@ object PipelineExample {
     // $example on$
     // Prepare training documents from a list of (id, text, label) tuples.
     val training = spark.createDataFrame(Seq(
-      (0L, "a b c d e spark", 1.0),
+      (0L, "b b c d e spark", 1.0),
       (1L, "b d", 0.0),
       (2L, "spark f g h", 1.0),
       (3L, "hadoop mapreduce", 0.0))).toDF("id", "text", "label")
@@ -34,10 +34,22 @@ object PipelineExample {
     val tokenizer = new Tokenizer()
       .setInputCol("text")
       .setOutputCol("words")
+
+    // add log by qianbw
+    var wordsData = tokenizer.transform(training)
+    wordsData.select("id", "text", "words").take(4).foreach(println)
+    // end log by qianbw
+
     val hashingTF = new HashingTF()
       .setNumFeatures(1000)
       .setInputCol(tokenizer.getOutputCol)
       .setOutputCol("features")
+
+    // add log by qianbw
+    var hashData = hashingTF.transform(wordsData)
+    hashData.select("id", "words", "features").take(4).foreach(println)
+    // end log by qianbw
+
     val lr = new LogisticRegression()
       .setMaxIter(10)
       .setRegParam(0.001)
