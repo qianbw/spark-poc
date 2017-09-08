@@ -32,7 +32,7 @@ object SparkSQLUDF2 {
     //val conf = new SparkConf().setMaster("local[*]").setAppName("SparkSQLWindowFunctionOps")
     //val sc = new SparkContext(conf)
 
-    val hiveContext = spark.sqlContext
+    //val hiveContext = spark.sqlContext
 
 //    val bigData = Array("Spark", "Hadoop", "Flink", "Spark", "Hadoop", "Flink", "Spark", "Hadoop", "Flink", "Spark", "Hadoop", "Flink")
 //    val bigDataRDD = sc.parallelize(bigData)
@@ -64,8 +64,8 @@ object SparkSQLUDF2 {
     /*
      * 通过HiveContext注册UDF，在scala2.10.x版本UDF函数最多可以接受22个输入参数
      */
-    hiveContext.udf.register("multi2", (input: Integer) => input * 2)
-    hiveContext.sql("select name, multi2(age) from people").show()
+    spark.udf.register("multi2", (input: Integer) => input * 2)
+    spark.sql("select name, multi2(age) from people").show()
 
     //hiveContext.udf.register("wordCount", new MyUDAF)
     //hiveContext.sql("select name,wordCount(name) as count,computeLength(name) as length from bigDataTable group by name ").show
