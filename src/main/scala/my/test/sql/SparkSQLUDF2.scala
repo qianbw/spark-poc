@@ -1,4 +1,4 @@
-package my.text.sql
+package my.test.sql
 
 import org.apache.spark.SparkContext
 import org.apache.spark.SparkConf
